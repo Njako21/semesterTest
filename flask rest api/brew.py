@@ -7,7 +7,7 @@ from variables.brew import BREW, control_cmd
 
 brew = Blueprint('brew', __name__, template_folder='templates')
 
-@brew.route(prefix + "/<string:brew_info>/read", methods=['GET'])
+@brew.route(prefix + "/read/<string:brew_info>", methods=['GET'])
 def brew_read(brew_info):
     try:
         if brew_info == "all":
@@ -21,7 +21,7 @@ def brew_read(brew_info):
     except:
         return does_not_exist_brew_read
 
-@brew.route(prefix + "/<string:brew_info>/write", methods=['POST'])
+@brew.route(prefix + "/write/<string:brew_info>", methods=['POST', 'GET'])
 def brew_write(brew_info):
     request_body = request.get_json()
     print(request_body)
@@ -40,7 +40,7 @@ def brew_write(brew_info):
 @brew.route(prefix+"/read")
 @brew.route(prefix+"/read/")
 def does_not_exist_brew_read():
-    return render_template('brew_r.html', BREW=BREW.keys())
+    return render_template('read.html', items=BREW.keys(), subdomain=(prefix+"/read"), all=True, example="set_speed")
 
 @brew.route(prefix + "/<string:brew_info>", methods=['GET'])
 @brew.route(prefix)
@@ -51,7 +51,7 @@ def does_not_exist_brew():
 @brew.route(prefix+"/write")
 @brew.route(prefix+"/write/")
 def does_not_exist_brew_write():
-    return render_template('brew_w.html', BREW=BREW.keys())
+    return render_template('write.html', items=BREW.keys(), subdomain=(prefix+"/write"), all=True, example="set_speed")
 
 def all():
     temp = BREW.copy()

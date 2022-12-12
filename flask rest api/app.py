@@ -19,7 +19,6 @@ def start():
         else:
             start()
 
-start()
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 

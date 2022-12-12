@@ -26,7 +26,7 @@ def adminL(admin_link):
 @admin.route(prefix)
 @admin.route(prefix+"/")
 def doesNotExist():
-    return render_template('admin.html', admin_links=ADMIN.keys())
+    return render_template('read.html', items=ADMIN.keys(), subdomain=prefix, all=True, example="stop_reason")
 
 
 @admin.after_request

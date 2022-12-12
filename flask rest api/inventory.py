@@ -20,7 +20,7 @@ def ingredient(ingredient):
 @inventory.route(prefix)
 @inventory.route(prefix+"/")
 def doesNotExist():
-    return render_template('inventory.html', ingredients=INGREDIENTS.keys())
+    return render_template('read.html', items=INGREDIENTS.keys(), subdomain=prefix, all=True, example="hops")
 
 
 def all():

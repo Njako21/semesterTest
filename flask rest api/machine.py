@@ -23,7 +23,7 @@ def machineD(machine_data):
 @machine.route(prefix)
 @machine.route(prefix+"/")
 def doesNotExist():
-    return render_template('machine.html', machine_links=MACHINE.keys())
+    return render_template('read.html', items=MACHINE.keys(), subdomain=prefix, all=False, example="vibrations")
 
 
 @machine.after_request

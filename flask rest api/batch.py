@@ -19,7 +19,7 @@ def batch_in(batch_info):
 @batch.route(prefix)
 @batch.route(prefix+"/")
 def doesNotExist():
-    return render_template('batch.html', BATCHINFO=BATCH.keys())
+    return render_template('read.html', items=BATCH.keys(), subdomain=prefix, all=True, example="batch_id")
 
 def all():
     temp = BATCH.copy()
