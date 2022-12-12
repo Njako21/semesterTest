@@ -1,0 +1,21 @@
+.container{
+    display: flex;
+    width: 50vw;
+    justify-content: center;
+}
+
+.progress{
+    text-align: center;
+    width: 10vw;
+}
+
+#content{
+    display: grid;
+    justify-content: center;
+    text-align: center;
+}
+
+#connection{
+    margin: 1vh;
+
+}
