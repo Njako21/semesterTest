@@ -1,5 +1,4 @@
 import math
-
 from flask import Blueprint, make_response, jsonify, render_template, request
 from prefixs.prefixs import brew as prefix
 from opcua_client import read_node_val
@@ -21,22 +20,6 @@ def brew_read(brew_info):
     except:
         return does_not_exist_brew_read
 
-@brew.route(prefix + "/write/<string:brew_info>", methods=['POST', 'GET'])
-def brew_write(brew_info):
-    request_body = request.get_json()
-    print(request_body)
-    print("hello world")
-    return make_response(jsonify({
-        "geta": "test",
-    }))
-    try:
-        if brew_info == "all":
-            return all()
-        response = jsonify({brew_info: read_node_val(BREW[brew_info])})
-        return make_response(response, 200)
-    except:
-        return does_not_exist_brew_write
-
 @brew.route(prefix+"/read")
 @brew.route(prefix+"/read/")
 def does_not_exist_brew_read():
@@ -47,11 +30,6 @@ def does_not_exist_brew_read():
 @brew.route(prefix+"/")
 def does_not_exist_brew():
     return render_template('brew.html')
-
-@brew.route(prefix+"/write")
-@brew.route(prefix+"/write/")
-def does_not_exist_brew_write():
-    return render_template('write.html', items=BREW.keys(), subdomain=(prefix+"/write"), all=True, example="set_speed")
 
 def all():
     temp = BREW.copy()

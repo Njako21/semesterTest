@@ -1,4 +1,4 @@
-from opcua_client import read_node_val
+from opcua_client import read_node_val, read_node
 from flask import Blueprint, jsonify, make_response, render_template
 from variables.ingredients import INGREDIENTS
 from prefixs.prefixs import inventory as prefix
@@ -9,6 +9,7 @@ inventory = Blueprint('inventory', __name__, template_folder='templates')
 def ingredient(ingredient):
     if ingredient != "all":
         try:
+
             return make_response(jsonify({
                 ingredient: read_node_val(INGREDIENTS[ingredient]),
             }), 200)
@@ -33,5 +34,5 @@ def all():
 
 @inventory.after_request
 def add_cors_headers(response):
-    response.headers["Access-Control-Allow-Origin"] = "http://localhost:8000"
+    response.headers["Access-Control-Allow-Origin"] = "http://localhost"
     return response

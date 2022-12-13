@@ -28,5 +28,5 @@ def doesNotExist():
 
 @machine.after_request
 def add_cors_headers(response):
-    response.headers["Access-Control-Allow-Origin"] = "http://localhost:8000"
+    response.headers["Access-Control-Allow-Origin"] = "http://localhost"
     return response

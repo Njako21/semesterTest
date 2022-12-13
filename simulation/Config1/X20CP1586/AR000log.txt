@@ -1,34 +1,21 @@
 
 
-Mon Dec 12 04:13:56 2022
+Tue Dec 13 02:34:08 2022
 No ARsim registration found!
   Bernecker & Rainer 
 
 
 
-Mon Dec 12 04:13:56 2022
+Tue Dec 13 02:34:08 2022
 COMMAND_COLDSTART
-InstanceName : 01d90dd7c59ab340
+InstanceName : 01d90e92fe66bbe0
 
 WorkingPath :
-C:\semesterprojekt\simulation\Config1\X20CP1586\
+C:\Users\Nick\Documents\GitHub\semesterTest\simulation\Config1\X20CP1586\
 
 
 
-Mon Dec 12 04:13:56 2022
-COMMAND_COLDSTART
-Version : E4.34
-
-
-
-Mon Dec 12 04:13:59 2022
-COMMAND_TERMINATE
-
-
-Mon Dec 12 04:14:00 2022
-
-
-Mon Dec 12 04:14:00 2022
+Tue Dec 13 02:34:08 2022
 COMMAND_COLDSTART
 Version : E4.34
 
