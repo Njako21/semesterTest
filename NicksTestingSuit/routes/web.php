@@ -15,9 +15,12 @@ use App\Http\Controllers\viewRouting;
 |
 */
 
+Route::get('/test', function(){
+   return view("brew")->with('selected', 'brew');
+});
+
 Route::get('/', [viewRouting::class, 'index'])->name("home");
 Route::get('/brew', [viewRouting::class, 'brew'])->name("brew");
 Route::get('/admin', [viewRouting::class, 'admin'])->name("admin");
-
 
 Route::get('/api/getInventory', [api::class, 'getInventory'])->name("inventory");
