@@ -14,7 +14,7 @@
             <option value="4">Ale</option>
             <option value="5">Alcohol Free</option>
         </select>
-        <input type="number" id="quantity" placeholder="quantity" onkeyup="updateSpeed()">
+        <input type="number" id="quantity" placeholder="quantity" value="300" onkeyup="updateSpeed()">
         <p id="speed-display">Current speed:</p>
         <input type="number" id="speedC" value="50" onkeyup="changeSpeed()">
         <input type="range" id="speed" min="1" max="600" value="300" oninput="updateSpeed()">
@@ -23,30 +23,33 @@
             <label for="checkbox">Run at optimal speed</label>
         </div>
         <p id="timerTakes">Est time: </p>
-        <button onmouseup="costCalc()">Start production</button>
+        <button onmouseup="prompt()">Start production</button>
     </div>
     </div>
-    <script>
-        fetch('http://localhost:5000/api/brew/write/brew', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "set_speed": 200,
-            })
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-            })
-            .catch(error => {
-                console.log(error)
-            });
-    </script>
 @endsection
 @section("script")
     <script>
+
+        function write(variable, type){
+            fetch('http://localhost:5000/api/write/'+type, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    value: variable,
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+
         updateSpeed()
 
         function beertype(){
@@ -105,28 +108,38 @@
             var remainingSeconds = Math.floor(seconds % 60);
             minutes %= 60
 
-            document.getElementById("timerTakes").innerText = "Est time: H:"+hours+" M:"+minutes+" S:"+remainingSeconds
+            answer = "Est time: H:"+hours+" M:"+minutes+" S:"+remainingSeconds
+
+            document.getElementById("timerTakes").innerText = answer
+            return answer
         }
 
-        function costCalc(){
+        function prompt(){
+            write(2, "set_batch_id")
+            write(parseFloat(document.getElementById("beerType").value), "set_recipe")
+            write(parseFloat(document.getElementById("quantity").value), "set_quantity")
+            write(parseFloat(document.getElementById("speed").value), "set_speed")
+            write(2, "set_command")
+            write(true, "ExecuteCmd")
+            estTimeVar = ""
             switch (document.getElementById("beerType").value) {
                 case "0": //Pilsner
-                    trueCost(4,2,1,4,1)
+                    estTimeVar = trueCost(4,2,1,4,1)
                     break
                 case '1': //Wheat
-                    trueCost(1,4,1,3,6)
+                    estTimeVar = trueCost(1,4,1,3,6)
                     break
                 case '2': //IPA
-                    trueCost(4,1,5,1,4)
+                    estTimeVar = trueCost(4,1,5,1,4)
                     break
                 case '3': //Stout
-                    trueCost(3,4,6,2,1)
+                    estTimeVar = trueCost(3,4,6,2,1)
                     break
                 case '4': //Ale
-                    trueCost(4,6,2,8,2)
+                    estTimeVar = trueCost(4,6,2,8,2)
                     break
                 case '5': //Alcohol Free
-                    trueCost(1,1,4,0,5)
+                    estTimeVar = trueCost(1,1,4,0,5)
                     break
             }
         }
@@ -141,11 +154,15 @@
             ingredients.set('malt', quantity * malt);
             ingredients.set('yeast', quantity * yeast);
             ingredients.set('wheat', quantity * wheat);
-            console.log(ingredients.get('barley'))
-            console.log(ingredients.get('hops'))
-            console.log(ingredients.get('malt'))
-            console.log(ingredients.get('yeast'))
-            console.log(ingredients.get('wheat'))
+            func("barley", ingredients)
+            func("hops", ingredients)
+            func("malt", ingredients)
+            func("yeast", ingredients)
+            func("wheat", ingredients)
+        }
+
+        function func(var1, ingredients){
+            document.getElementById(var1).innerText = var1+": "+ ingredients.get(var1)
         }
     </script>
 @endsection

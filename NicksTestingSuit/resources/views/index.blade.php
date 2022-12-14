@@ -5,13 +5,6 @@
 
 @section("body")
     <h1>Dashboard</h1>
-    <div id="connection">
-        <p>Bakend status:</p>
-        <p id="connectionStatus"></p>
-        <button onclick="con(true)">Connect</button>
-        <button onclick="con(false)">Disconnect</button>
-    </div>
-    <p>Server Status: </p>
     <div class="container">
         <div class="progress">
             <p id="barley-text">I</p>
@@ -44,61 +37,19 @@
         </div>
     </div>
     <div>
-        <progress min="0" value="75" max="35000" id="Maintenance"></progress>
+        <p id="maintenance-text">V</p>
+        <p id="maintenance-full">1%</p>
+        <progress min="0" value="75" max="30000" id="maintenance"></progress>
     </div>
 @endsection
 @section("script")
     <script>
+        window.addEventListener('beforeunload', function() {
+            clearInterval(inventory);
+        });
 
 
-        let connect = false
-        let x = 1000;
+        inventory = setInterval(getData("hops:yeast:malt:wheat:barley:maintenance"), x)
 
-        function con(x){
-            if(x){
-                document.getElementById("connectionStatus").innerText = "Connecting"
-                document.getElementById("connectionStatus").style.color = "green"
-                connect = true;
-            }else if(!x){
-                document.getElementById("connectionStatus").innerText = "Disconnected"
-                document.getElementById("connectionStatus").style.color = "red"
-                connect = false;
-            }
-        }
-
-        con(false)
-
-        setInterval(getData, x)
-        async function getData(){
-            if(!connect){
-                return
-            }
-
-            fetch("{{route("inventory")}}", {
-                method: "GET"
-            })
-                .then(response => {
-                    return response.json();
-                })
-                .then(json => {
-                    if(document.getElementById("connectionStatus").innerText === "Connecting"){
-                        document.getElementById("connectionStatus").innerText = "Connected"
-                    }
-                    console.table(json)
-                    for (const [key, value] of Object.entries(json)) {
-                        const progress = document.getElementById(key);
-                        const text = document.getElementById(key+"-text");
-                        const full = document.getElementById(key+"-full");
-                        if(progress !== null){
-                            progress.value = value
-                            text.innerText = key
-                            full.innerText = ((value/35000)*100)+"%"
-                        }
-                    }
-                }).catch(error =>{
-                    con(false)
-                    document.getElementById("connectionStatus").innerText += ": Server Connection Refused"
-            });
-        }
     </script>
 @endsection

@@ -17,4 +17,8 @@ class viewRouting extends Controller
     function admin(){
         return view("admin")->with('selected', 'admin');
     }
+
+    function batches(){
+        return view("batches")->with('selected', 'batches');
+    }
 }

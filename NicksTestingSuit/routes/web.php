@@ -22,5 +22,8 @@ Route::get('/test', function(){
 Route::get('/', [viewRouting::class, 'index'])->name("home");
 Route::get('/brew', [viewRouting::class, 'brew'])->name("brew");
 Route::get('/admin', [viewRouting::class, 'admin'])->name("admin");
+Route::get('/batches', [viewRouting::class, 'batches'])->name("batches");
 
 Route::get('/api/getInventory', [api::class, 'getInventory'])->name("inventory");
+Route::get('/api/read/{id}', [api::class, 'get'])->name("get");
+Route::post('/api/write/{id}', [api::class, 'post'])->name("post");
