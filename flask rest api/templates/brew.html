@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <title>API brew</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts.css') }}">
+  </head>
+  <body style="display: grid; justify-content: center; text-align: center;">
+  <a href="/api" id="back">Back</a>
+    <div id="content">
+      <h1>brew links</h1>
+      <div id="buttons">
+          <a href="/api/brew/read">Brew read G</a>
+          <a href="/api/brew/write">Brew Write P</a>
+      </div>
+      <article>
+          Due to this being a fairly big module it has been split into two parts.<br>
+          The first part being Read is read only and the second part being Write only
+      </article>
+      </div>
+    </div>
+  </body>
+</html>
